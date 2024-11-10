@@ -10,14 +10,14 @@ void main (){
     ssize_t nread; // numero de caracteres leidos
 
     while (1){
-        printf("shell> ");   
-        nread = getline(&line, &len, stdin);
+        printf("shell> ");  
+        nread = getline(&line, &len, stdin); //input de usuario
         if (nread == -1){
             break;
         }
 
-        line[strcspn(line, "\n")] = 0;
-        command_manager(line);
+        line[strcspn(line, "\n")] = 0; //se remueve salto de linea para su evaluacion en command_manager
+        command_manager(line); // se llama a command_manager que tomara la linea y evaluara el comando y los argumentos
 
     }
     free(line);
