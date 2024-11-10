@@ -9,8 +9,10 @@ void main (){
     size_t len = 0; // tamaño del buffer
     ssize_t nread; // numero de caracteres leidos
 
+    chdir("home");
+
     while (1){
-        printf("shell> ");  
+        printf("shell>home: ");  
         nread = getline(&line, &len, stdin); //input de usuario
         if (nread == -1){
             break;
