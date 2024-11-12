@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 
 #define BUFFER_SIZE 1024
+#define MAX_PATH 1024
 
 void command_manager(char *string) {
     char *command = strtok(string, " "); // se lee hasta primer espacio (comando)
@@ -27,6 +28,12 @@ void command_manager(char *string) {
         if (argument != NULL) {
             out_command(argument);
         }
+    
+    } else if (strcmp(command, "ir") == 0){
+        if (argument != NULL){
+            ir_command(argument);
+        }
+         
     } else if (strcmp(command, "copiar") == 0) { // copia un archivo
         char *argument1 = strtok(argument, " "); // primer argumento
         char *argument2 = strtok(NULL, ""); // segundo argumento
@@ -73,6 +80,24 @@ void msg_command(char *string) {
         printf("%s\n", string);
     } else {
         printf("\n");
+    }
+}
+void ir_command(char *path) {
+    if (path == NULL) {
+        printf("Uso: ir <directorio>\n");
+        return;
+    }
+
+    // Cambiar al directorio especificado
+    if (chdir(path) == 0) {
+        char cwd[MAX_PATH];
+        if (getcwd(cwd, sizeof(cwd)) != NULL) {
+            printf("Path: %s\n", cwd);
+        } else {
+            perror("Error al obtener el directorio actual");
+        }
+    } else {
+        perror("Error al cambiar el directorio");
     }
 }
 
