@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-
+#include <dirent.h>
 #define BUFFER_SIZE 1024
 #define MAX_PATH 1024
+char path[MAX_PATH];
 
 void command_manager(char *string) {
     char *command = strtok(string, " "); // se lee hasta primer espacio (comando)
@@ -69,7 +70,15 @@ void command_manager(char *string) {
         } else {
             printf("Uso: renombrar <nombre_actual> <nuevo_nombre>\n");
         }
+    }
+    else if (strcmp(command, "listar") == 0) { // Lista un directorio
+    if (argument != NULL) {
+        listar(argument);
     } else {
+        printf("Uso: listar <directorio>\n");
+    }
+    }
+    else {
         printf("Comando desconocido: %s\n", command);
     }
 }
@@ -166,4 +175,21 @@ int renombrar(const char *nombreActual, const char *nuevoNombre) {
         perror("Error al renombrar el archivo");
         return -1;
     }
+}
+void listar(const char *path) {
+    DIR *dir = opendir(path); // Abre el directorio especificado
+    if (dir == NULL) {
+        perror("Error al abrir el directorio");
+        return;
+    }
+
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        // Ignora los directorios "." y ".."
+        if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+            printf("%s\n", entry->d_name); // Imprime el nombre de cada archivo/subdirectorio
+        }
+    }
+
+    closedir(dir); // Cierra el directorio después de leerlo
 }
