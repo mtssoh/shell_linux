@@ -10,4 +10,5 @@ int copiar(const char *origen, const char *destino);
 int mover(const char *origen, const char *destino);
 int renombrar(const char *nombreActual, const char *nuevoNombre);
 void listar(const char *path);
+void permisos(char *path, mode_t permisos);
 #endif

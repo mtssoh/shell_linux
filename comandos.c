@@ -78,6 +78,14 @@ void command_manager(char *string) {
         printf("Uso: listar <directorio>\n");
     }
     }
+    else if (strcmp(command, "permisos") == 0){
+        char *argument1 = strtok(argument, " ");
+        char *argument2 = strtok(NULL, " ");
+        if (argument1 != NULL && argument2 != NULL){
+            mode_t permisos_archivo = (mode_t) strtol(argument2, NULL, 8);
+            permisos(argument1, permisos_archivo);
+        }
+    }
     else {
         printf("Comando desconocido: %s\n", command);
     }
@@ -192,4 +200,13 @@ void listar(const char *path) {
     }
 
     closedir(dir); // Cierra el directorio después de leerlo
+}
+
+void permisos(char *path, mode_t permisos_archivo){ //cambia permisos de archivos con argumentos <archivo> <permisos (octal)>
+    if (chmod(path, permisos_archivo) == -1){
+        perror("Error al cambiar permisos");
+    }
+    else{
+        printf("Permisos de %s cambiados a %o\n", path, permisos_archivo);
+    }
 }
