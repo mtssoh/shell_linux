@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-#include "comandos.c"
+#include <stdlib.h>
+#include <stdio.h>
+#include "command_manager.c"
+#include "commands.c"
 
 void main (){
     char *line = NULL; // linea de entrada de comando
