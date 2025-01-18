@@ -27,5 +27,5 @@ Pendientes:
 2. Registrar todos los comandos realizados por cada usuario con timestamps.
 3. Registrar errores de retorno en un log.
 4. Documentar codigo.
-5. Transferencia FTP o SCP.
-6. Descargar dependencias necesarias en el lfs.
+5. Transferencia FTP o SCP. (No se como hacer esto)
+6. Descargar dependencias necesarias en el lfs. (RESUELTO)

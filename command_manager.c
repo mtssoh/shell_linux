@@ -35,18 +35,30 @@ void command_manager(char *string) {
         if (argument != NULL) {
             msg_command(argument);
         }
+        else{
+            printf("Uso: msg <mensaje>");
+        }
     } else if (strcmp(command, "creardir") == 0) { // crear directorio
         if (argument != NULL) {
             creardir_command(argument);
+        }
+        else{
+            printf("Uso: creardir <directorio>");
         }
     } else if (strcmp(command, "out") == 0) { // comando fuera de shell
         if (argument != NULL) {
             out_command(argument);
         }
+        else{
+            printf("Uso: out <comando + argumento>");
+        }
     
     } else if (strcmp(command, "ir") == 0){
         if (argument != NULL){
             ir_command(argument);
+        }
+        else{
+            printf("Uso: ir <path>");
         }
          
     } else if (strcmp(command, "copiar") == 0) { // copia un archivo
