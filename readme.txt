@@ -16,3 +16,6 @@
 -----------------------------------------------------------------------------------------------------
 16/1/2025	Se agrego contraseña, funciona bien, no se necesita mas testeo.                          | Testeado (funciona)
 -----------------------------------------------------------------------------------------------------
+18/1/2025	Se agrego servicio, funciona bien con procesos sin funcionalidad, quizas no requiera mas | Testeado (funciona)
+			testeo.																					 |
+-----------------------------------------------------------------------------------------------------

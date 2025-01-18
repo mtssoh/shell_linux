@@ -6,10 +6,12 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <pwd.h>
 #include <grp.h>
 #include "comandos.h"
 #include <ctype.h>
+#include <errno.h>
 
 #define BUFFER_SIZE 1024
 #define MAX_PATH 1024
@@ -135,6 +137,16 @@ void command_manager(char *string) {
         }
         else{
             printf("Cambio de contraseña cancelado.\n");
+        }
+    }
+    else if (strcmp(command, "servicio") == 0){
+        char *action = strtok(argument, " ");
+        char *service_name = strtok(NULL, " ");
+        if (action == NULL || service_name == NULL){
+            printf("Uso: servicio, <accion (start, stop, restart)> <servicio>\n");
+        }
+        else{
+            servicio(action, service_name);
         }
     }
 

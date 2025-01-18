@@ -182,4 +182,41 @@ void contraseña(char *usuario, char *password){
     
 }
 
+void servicio(char* action, char *service_name){
+    char service_path[256];
+    char *msg = (strcmp(action, "stop") == 0 ? "apagado" : "iniciado");
+    snprintf(service_path, sizeof(service_path), "/etc/init.d/%s", service_name);
+
+    if (access(service_path, X_OK) == -1){
+        perror("Error: no se puede encontrar o ejecutar el script de servicio");
+        return;
+    }
+
+    pid_t pid = fork();
+
+    if (pid == 0) { // Proceso hijo
+        execl(service_path, service_path, action, (char *)NULL);
+        perror("Error al iniciar servidor");
+        exit(EXIT_FAILURE);
+    }
+    else if (pid < 0) { // Error al crear el proceso
+        perror("Error al crear proceso");
+    }
+    else { // Proceso padre
+        int status;
+        waitpid(pid, &status, 0);  // Esperar a que el hijo termine
+        if (WIFEXITED(status)) {
+            printf("Proceso %s %s correctamente\n", service_name, msg);
+        } else {
+            printf("El proceso %s terminó con un error\n", service_name);
+        }
+    }
+}
+
+
+
+
+
+
+
     
