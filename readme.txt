@@ -3,7 +3,7 @@
         	Se agrego comando de creardir (llamada al sistema de mkdir)                              |
        	 	Se agrego comando out para comandos fuera de la shell (out <comando + argunmento>)       |
 -----------------------------------------------------------------------------------------------------
-11/11/2024 	Se agrego comandos de mover (funcionamiento no terminado), copiar y renombrar, aparte    | Pendiente
+11/11/2024 	Se agrego comandos de mover (funcionamiento no terminado), copiar y renombrar, aparte    | Testeado (funcionando)
         	Se arreglo un bug del comando out con la nueva implementacion de los comandos.           |
 -----------------------------------------------------------------------------------------------------
 12/11/2024 	Se agrego comando ir (comando cd, funcionamiento probablemente no terminado debido a     | Testeado (funciona)
@@ -19,3 +19,13 @@
 18/1/2025	Se agrego servicio, funciona bien con procesos sin funcionalidad, quizas no requiera mas | Testeado (funciona)
 			testeo.																					 |
 -----------------------------------------------------------------------------------------------------
+
+
+
+Pendientes: 
+1. Registrar inicios de sesion y salida de sesion del usuario (detalles en classroom).
+2. Registrar todos los comandos realizados por cada usuario con timestamps.
+3. Registrar errores de retorno en un log.
+4. Documentar codigo.
+5. Transferencia FTP o SCP.
+6. Descargar dependencias necesarias en el lfs.

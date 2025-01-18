@@ -68,9 +68,13 @@ int copiar(const char *origen, const char *destino) {
     return 0;
 }
 
-// Funcion para mover un archivo
-int mover(const char *origen, const char *destino) {
-    if (copiar(origen, destino) == 0) {
+
+int mover(char *origen, char *destino) {
+
+    char rutaDestino[BUFFER_SIZE];
+    snprintf(rutaDestino, sizeof(rutaDestino), "%s/%s", destino, basename(origen));
+
+    if (copiar(origen, rutaDestino) == 0) {
         if (remove(origen) == 0) {
             return 0; 
         } else {

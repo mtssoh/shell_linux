@@ -12,6 +12,7 @@
 #include "comandos.h"
 #include <ctype.h>
 #include <errno.h>
+#include <libgen.h>
 
 #define BUFFER_SIZE 1024
 #define MAX_PATH 1024
@@ -66,7 +67,7 @@ void command_manager(char *string) {
         char *argument2 = strtok(NULL, "");
         if (argument != NULL && argument2 != NULL) {
             if (mover(argument1, argument2) == 0) {
-                printf("Archivo movido de %s a %s\n", argument1, argument2);
+                printf("Archivo %s movido a %s\n", argument1, argument2);
             }
         } else {
             printf("Uso: mover <archivo_origen> <archivo_destino>\n");
