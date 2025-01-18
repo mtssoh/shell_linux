@@ -194,24 +194,16 @@ void servicio(char* action, char *service_name){
 
     pid_t pid = fork();
 
-    if (pid == 0) { // Proceso hijo
+    if (pid == 0) { 
         execl(service_path, service_path, action, (char *)NULL);
         perror("Error al iniciar servidor");
         exit(EXIT_FAILURE);
     }
-    else if (pid < 0) { // Error al crear el proceso
-        perror("Error al crear proceso");
-    }
-    else { // Proceso padre
-        int status;
-        waitpid(pid, &status, 0);  // Esperar a que el hijo termine
-        if (WIFEXITED(status)) {
-            printf("Proceso %s %s correctamente\n", service_name, msg);
-        } else {
-            printf("El proceso %s terminó con un error\n", service_name);
-        }
-    }
+    else if (pid < 0) { perror("Error al crear proceso");}
+
+    else { printf("Proceso %s %s correctamente\n", service_name, msg); }
 }
+
 
 
 
