@@ -21,15 +21,17 @@ void clean_buffer(){
     int c;
     while ((c = getchar()) != EOF && c != '\n'){ }
 }
+//se usa para limpiar el buffer, para poder usar scanf() sin problemas
 
 void command_manager(char *string) {
     char *command = strtok(string, " "); // se lee hasta primer espacio (comando)
-    char *argument = strtok(NULL, ""); // primer argumento
+    char *argument = strtok(NULL, ""); // argumento(s) del comando
     
 
     if (command == NULL) {
         return;
     }
+    //si no se entro nada, no se hace nada
 
     if (strcmp(command, "msg") == 0) { // mensaje
         if (argument != NULL) {
@@ -38,13 +40,20 @@ void command_manager(char *string) {
         else{
             printf("Uso: msg <mensaje>");
         }
-    } else if (strcmp(command, "creardir") == 0) { // crear directorio
+
+    //llama a msg(), clon de echo
+
+
+    } else if (strcmp(command, "creardir") == 0) { 
         if (argument != NULL) {
             creardir_command(argument);
         }
         else{
             printf("Uso: creardir <directorio>");
         }
+
+        //llama a creardir(), clon de mkdir
+
     } else if (strcmp(command, "out") == 0) { // comando fuera de shell
         if (argument != NULL) {
             out_command(argument);
@@ -52,6 +61,8 @@ void command_manager(char *string) {
         else{
             printf("Uso: out <comando + argumento>");
         }
+
+        //llama a out, se usa para comandos fuera de la shell, uso arriba
     
     } else if (strcmp(command, "ir") == 0){
         if (argument != NULL){
@@ -60,6 +71,8 @@ void command_manager(char *string) {
         else{
             printf("Uso: ir <path>");
         }
+
+        //llama a ir, clon de cd
          
     } else if (strcmp(command, "copiar") == 0) { // copia un archivo
         char *argument1 = strtok(argument, " "); // primer argumento
@@ -72,6 +85,8 @@ void command_manager(char *string) {
         } else {
             printf("Uso: copiar <archivo_origen> <archivo_destino>\n");
         }
+
+        //llama a copiar, que copia el contenido de un archivo a otro
     } 
 
     else if (strcmp(command, "mover") == 0) { // Mueve un archivo
@@ -84,6 +99,8 @@ void command_manager(char *string) {
         } else {
             printf("Uso: mover <archivo_origen> <archivo_destino>\n");
         }
+
+        //llama a mover, que copia un archivo de un lugar a otro y luego lo elimina
     } 
 
     else if (strcmp(command, "renombrar") == 0) { // Renombra un archivo
@@ -96,6 +113,8 @@ void command_manager(char *string) {
         } else {
             printf("Uso: renombrar <nombre_actual> <nuevo_nombre>\n");
         }
+
+        //llama a renombrar, renombra un archivo
     }
     else if (strcmp(command, "listar") == 0) { // Lista un directorio
     if (argument != NULL) {
@@ -103,6 +122,7 @@ void command_manager(char *string) {
     } else {
         printf("Uso: listar <directorio>\n");
     }
+    //llama a listar, clon de ls
     }
     else if (strcmp(command, "permisos") == 0){
         if (argument == NULL){
@@ -117,10 +137,11 @@ void command_manager(char *string) {
                 *permisos_ch = '\0';
                 char *files = argument;
                 mode_t permisos_mdt = (mode_t) strtol(permisos_ch + 1, NULL, 8);
-
+                //todo esto es para separar el string de argumento inicial, en distintos argumentos para la funcion permisos()
                 permisos(files, permisos_mdt);
             }
         }
+        //llama a permisos, con este comando se puede cambiar permisos de varios archivos con la notacion octal de chmod
     }
     else if (strcmp(command, "propietario") == 0) {
         if (argument == NULL) {
@@ -130,7 +151,9 @@ void command_manager(char *string) {
         char *user_or_group = strrchr(argument, ' ');
         *user_or_group = '\0';
         char *files = argument;
-        propietario(files, user_or_group + 1);
+        propietario(files, user_or_group + 1); //todo esto para separar el string de argumento inicial en distintos argumentos para la funcion propietario()
+
+        //llama a propietario, cambia el propietario de archivo(s)
         
     }
     else if(strcmp(command, "contraseña") == 0){
@@ -151,6 +174,8 @@ void command_manager(char *string) {
         else{
             printf("Cambio de contraseña cancelado.\n");
         }
+
+        //llamada a la funcion para cambiar la contraseña, cuenta con un mensaje de advertencia y confirmacion, para evitar errores
     }
     else if (strcmp(command, "servicio") == 0){
         char *action = strtok(argument, " ");
@@ -161,6 +186,7 @@ void command_manager(char *string) {
         else{
             servicio(action, service_name);
         }
+        //sistema para levantar y apagar procesos en 2do plano
     }
     else if (strcmp(command, "tftp") == 0){
         char *ftp_server = strtok(argument, " ");
@@ -176,9 +202,12 @@ void command_manager(char *string) {
             tftp(ftp_server, user, password, remote_file, local_path);
         }
     }
+        //funcion para realizar una transferencia ftp, basicamente se simplifica la interfaz de ftp 
+        //para poner todo en una linea de comando
 
     else {
         printf("Comando desconocido: %s\n", command);
+        //comando desconocido
     }
 }
 

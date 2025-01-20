@@ -9,36 +9,42 @@
 
 
 void main (){
-    char *line = NULL; // linea de entrada de comando
-    size_t len = 0; // tamaño del buffer
-    ssize_t nread; // numero de caracteres leidos
+    char *line = NULL; 
+    size_t len = 0;
+    ssize_t nread;
 
+    //variables para la lectura de la linea de comando
     
     uid_t uid = getuid();
-    struct passwd *pw = getpwuid(uid);
+    struct passwd *pw = getpwuid(uid); 
     if (pw == NULL) {
         perror("Error obteniendo nombre de usuario");
         return; 
     }
+    //se trata de conseguir el nombre de usuario, para redireccionarlo futuramente a /home/user
 
     char user_home[512];
     snprintf(user_home, sizeof(user_home), "/home/%s", pw->pw_name);
-
     chdir(user_home);
+
+    //aqui se hace lo explicado arriba
     
     while (1){
         char cwd[512];
         getcwd(cwd, sizeof(cwd));
-        printf("shell:%s->%s", pw->pw_name, cwd);
-        nread = getline(&line, &len, stdin); //input de usuario
+        printf("shell:%s->%s: ", pw->pw_name, cwd); 
+        nread = getline(&line, &len, stdin); 
         if (nread == -1){
             break;
         }
 
-        line[strcspn(line, "\n")] = 0; //se remueve salto de linea para su evaluacion en command_manager
-        command_manager(line); // se llama a command_manager que tomara la linea y evaluara el comando y los argumentos
-
+        line[strcspn(line, "\n")] = 0; 
+        command_manager(line); 
     }
     free(line);
+
+    /*este codigo de bloque se encarga de manejar el input del usuario, aparte de mostrar informacion como el usuario en el cual se ha logeado, y
+    el path absoluto desde /home. La linea de comando se pasa a command_manager, quien se encarga de el output y accion de la entrada del
+    usuario*/
     
 }
