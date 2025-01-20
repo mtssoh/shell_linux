@@ -19,6 +19,9 @@
 18/1/2025	Se agrego servicio, funciona bien con procesos sin funcionalidad, quizas no requiera mas | Testeado (funciona)
 			testeo.																					 |
 -----------------------------------------------------------------------------------------------------
+20/01/2025	Se agrego tftp, comando que realiza una transaccion ftp, funciona bien probado con       | Testeado (funciona)
+			ftp.gnu.org anonymous mail@mail.com README path_local									 | 
+-----------------------------------------------------------------------------------------------------
 
 
 
