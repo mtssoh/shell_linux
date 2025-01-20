@@ -208,6 +208,50 @@ void servicio(char* action, char *service_name){
     else { printf("Proceso %s %s correctamente\n", service_name, msg); }
 }
 
+void tftp(char *ftp_server, char *user, char *password, char *remote_file, char *local_path) {
+    char command[512];
+    char log_path[512];
+
+    
+    uid_t uid = getuid();
+    struct passwd *pw = getpwuid(uid);
+    if (pw == NULL) {
+        perror("Error obteniendo nombre de usuario");
+        return;
+    }
+
+  
+    snprintf(log_path, sizeof(log_path), "/home/%s/Shell_transferencias", pw->pw_name);
+
+    
+    FILE *log_file = fopen(log_path, "a");
+    if (log_file == NULL) {
+        perror("Error abriendo el archivo de log");
+        return;
+    }
+
+    
+    fprintf(log_file, "Servidor: %s. Usuario: %s. Archivo remoto: %s Ruta local: %s.\n", ftp_server, user, remote_file, local_path);
+    
+    
+    fclose(log_file);
+
+    
+    snprintf(command, sizeof(command),
+             "echo -e \"user %s %s \\nget %s %s\\nbye\" | ftp -n %s",
+             user, password, remote_file, local_path, ftp_server);
+
+    printf("Ejecutando: %s\n", command);
+
+   
+    int status = system(command);
+    if (status == -1) {
+        perror("Error ejecutando el comando tftp");
+    } else {
+        printf("Transferencia ftp completada\n");
+    }
+}
+
 
 
 

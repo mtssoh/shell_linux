@@ -162,6 +162,20 @@ void command_manager(char *string) {
             servicio(action, service_name);
         }
     }
+    else if (strcmp(command, "tftp") == 0){
+        char *ftp_server = strtok(argument, " ");
+        char *user = strtok(NULL, " ");
+        char *password = strtok(NULL, " ");
+        char *remote_file = strtok(NULL, " ");
+        char *local_path = strtok(NULL, " ");
+
+        if (ftp_server == NULL || user == NULL || password == NULL || remote_file == NULL || local_path == NULL){
+            printf("Uso: tftp <servidor_ftp> <user> <password> <archivo remoto> <ruta local>\n");
+        }
+        else{
+            tftp(ftp_server, user, password, remote_file, local_path);
+        }
+    }
 
     else {
         printf("Comando desconocido: %s\n", command);
