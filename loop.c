@@ -1,11 +1,13 @@
 #include "command_manager.c"
 #include "commands.c"
+#include "logs.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <time.h>
 
 
 void main (){
@@ -33,13 +35,15 @@ void main (){
         char cwd[512];
         getcwd(cwd, sizeof(cwd));
         printf("shell:%s->%s: ", pw->pw_name, cwd); 
-        nread = getline(&line, &len, stdin); 
+        nread = getline(&line, &len, stdin);
+
         if (nread == -1){
             break;
         }
 
         line[strcspn(line, "\n")] = 0; 
-        command_manager(line); 
+        command_manager(line);
+        history_log(line);
     }
     free(line);
 

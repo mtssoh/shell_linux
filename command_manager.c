@@ -13,6 +13,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <libgen.h>
+#include <time.h>
 
 #define BUFFER_SIZE 1024
 #define MAX_PATH 1024
@@ -160,21 +161,24 @@ void command_manager(char *string) {
         if (argument == NULL){
             printf("Uso: contraseña <usuario> <nueva contraseña>");
         }
-        printf("Estas seguro de cambiar su contraseña? Y/N: ");
-        char sec;
-
-        scanf("%c", &sec);
-
-        clean_buffer();
-        if (toupper(sec) == 'Y'){
-            char *user = strtok(argument, " ");
-            char *password = strtok(NULL, " ");
-            contraseña(user, password);
-        }
         else{
-            printf("Cambio de contraseña cancelado.\n");
-        }
+            printf("Estas seguro de cambiar su contraseña? Y/N: ");
+            char sec;
 
+            scanf("%c", &sec);
+
+            clean_buffer();
+            if (toupper(sec) == 'Y'){
+                char *user = strtok(argument, " ");
+                char *password = strtok(NULL, " ");
+                contraseña(user, password);
+            }
+            else{
+                printf("Cambio de contraseña cancelado.\n");
+            }
+
+        }
+        
         //llamada a la funcion para cambiar la contraseña, cuenta con un mensaje de advertencia y confirmacion, para evitar errores
     }
     else if (strcmp(command, "servicio") == 0){
@@ -204,7 +208,24 @@ void command_manager(char *string) {
     }
         //funcion para realizar una transferencia ftp, basicamente se simplifica la interfaz de ftp 
         //para poner todo en una linea de comando
+    else if (strcmp(command, "usuario") == 0){
+        
+        char *user = strtok(argument, " ");
+        char *info;
+        if (user != NULL){
+            info = argument + strlen(user) + 1;
+        }
+        
 
+        if (user == NULL || info == NULL){
+            printf("Uso: usuario <user> <info>\n<");
+            return;
+        }
+
+        else{
+            usuario(user, info);
+        }
+    }
     else {
         printf("Comando desconocido: %s\n", command);
         //comando desconocido

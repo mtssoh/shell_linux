@@ -22,14 +22,17 @@
 20/01/2025	Se agrego tftp, comando que realiza una transaccion ftp, funciona bien probado con       | Testeado (funciona)
 			ftp.gnu.org anonymous mail@mail.com README path_local									 | 
 -----------------------------------------------------------------------------------------------------
+21/01/2025	Se agrego usuario, añade un usuario, tambien se mejoro la terminal de usuario, mostrando | Testeado (funciona)
+			mas informacion. Se añadio un sistema de logs de comandos realizados por los usuarios.   |
+-----------------------------------------------------------------------------------------------------
 
 
 
 Pendientes: 
-1. Registrar inicios de sesion y salida de sesion del usuario (detalles en classroom).
-2. Registrar todos los comandos realizados por cada usuario con timestamps.
-3. Registrar errores de retorno en un log.
-4. Documentar codigo.
+1. Registrar inicios de sesion y salida de sesion del usuario (detalles en classroom). (IMPLEMENTAR Y PROBAR)
+2. Registrar todos los comandos realizados por cada usuario con timestamps. (RESUELTO)
+3. Registrar errores de retorno en un log. (PENDIENTE)
+4. Documentar codigo.(RESUELTO)
 5. Transferencia FTP o SCP. (No se como hacer esto) - (RESUELTO)
-6. Descargar dependencias necesarias en el lfs. (RESUELTO)
-7. Agregar usuario.
+6. Descargar dependencias necesarias en el lfs. (RESUELTO) - (probar de vuelta)
+7. Agregar usuario. (RESUELTO)

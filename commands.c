@@ -277,6 +277,17 @@ void tftp(char *ftp_server, char *user, char *password, char *remote_file, char 
     fclose(log_file);
 }
 
+void usuario(char *user, char *info){
+    char comando[256];
+    snprintf(comando, sizeof(comando), "sudo useradd -m -s /bin/shell %s -c %s", user, info); 
+    system(comando);
+    //se crea el usuario con esta shell /bin/shell
+    //se agrega info en el campo
+
+
+    printf("Usuario %s creado exitosamente\n", user);
+}
+
 
 
 
