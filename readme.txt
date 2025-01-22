@@ -36,3 +36,9 @@ Pendientes:
 5. Transferencia FTP o SCP. (No se como hacer esto) - (RESUELTO)
 6. Descargar dependencias necesarias en el lfs. (RESUELTO) - (probar de vuelta)
 7. Agregar usuario. (RESUELTO)
+
+Extras (Para funcionamiento en el LFS):
+1. Instalar sudo en lfs, o cambiar las funciones que utilizan system(sudo).
+2. Instalar git en el lfs, para poder compilar la shell desde el lfs.
+3. Crear la carpeta /var/log/shell, dar permisos 777, aparte de los archivos necesarios para los logs.
+4. Reverificar las dependencias.
