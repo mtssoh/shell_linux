@@ -226,6 +226,9 @@ void command_manager(char *string) {
             usuario(user, info);
         }
     }
+    else if (strcmp(command, "salir") == 0){
+        printf("Saliendo del sistema...\n");
+    }
     else {
         printf("Comando desconocido: %s\n", command);
         //comando desconocido

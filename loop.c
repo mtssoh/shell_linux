@@ -1,6 +1,5 @@
 #include "command_manager.c"
 #include "commands.c"
-#include "logs.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +7,8 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <time.h>
+#include <netdb.h>
+#include <arpa/inet.h>
 
 
 void main (){
@@ -30,7 +31,7 @@ void main (){
     chdir(user_home);
 
     //aqui se hace lo explicado arriba
-    
+    login_log(1);
     while (1){
         char cwd[512];
         getcwd(cwd, sizeof(cwd));
@@ -38,15 +39,19 @@ void main (){
         nread = getline(&line, &len, stdin);
 
         if (nread == -1){
+            login_log(0);
             break;
         }
 
-        line[strcspn(line, "\n")] = 0; 
+        line[strcspn(line, "\n")] = 0;
         command_manager(line);
         history_log(line);
+        if (strcmp(line, "salir") == 0){
+            break;
+        }
     }
     free(line);
-
+    login_log(0);
     /*este codigo de bloque se encarga de manejar el input del usuario, aparte de mostrar informacion como el usuario en el cual se ha logeado, y
     el path absoluto desde /home. La linea de comando se pasa a command_manager, quien se encarga de el output y accion de la entrada del
     usuario*/

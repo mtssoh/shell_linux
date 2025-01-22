@@ -1,3 +1,5 @@
+#include "logs.c"
+
 void msg_command(char *string) {
     if (string != NULL) {
         printf("%s\n", string);
@@ -20,10 +22,10 @@ void ir_command(char *path) {
             //con getcwd se consigue el directorio actual para imprimirlo como mensaje
             printf("Path: %s\n", cwd);
         } else {
-            perror("Error al obtener el directorio actual");
+            report("Error al obtener el directorio actual");
         }
     } else {
-        perror("Error al cambiar el directorio");
+        report("Error al cambiar el directorio");
     }
 }
 
@@ -33,7 +35,7 @@ void creardir_command(char *string) {
         //se crea un directorio con permisos 0777 (misma notacion que chmod)
         printf("Directorio '%s' creado\n", string);
     } else {
-        perror("Error al crear el directorio");
+        report("Error al crear directorio");
     }
 }
 
@@ -41,21 +43,22 @@ void creardir_command(char *string) {
 void out_command(char *string) {
     if (system(string) == -1) {
         //con system, se ejecuta el comando desde otra terminal, con la shell por default del sistema
-        perror("Error al ejecutar el comando externo");
+        report("Error al ejecutar comando externo");
     }
 }
 
 // Funcion para copiar un archivo
 int copiar(const char *origen, const char *destino) {
     FILE *archivoOrigen = fopen(origen, "rb");
+    
     if (!archivoOrigen) {
-        perror("Error al abrir el archivo de origen para copiar");
+        report("Error al abrir archivo de origen para copia");
         return -1;
     }
     //se abre el archivo origen como lectura
     FILE *archivoDestino = fopen(destino, "wb");
     if (!archivoDestino) {
-        perror("Error al crear el archivo de destino para copiar");
+        report("Error al crear el archivo de destino para copiar");
         fclose(archivoOrigen);
         return -1;
     }
@@ -90,7 +93,7 @@ int mover(char *origen, char *destino) {
             //se elimina, porque se movio
             return 0; 
         } else {
-            perror("Error al eliminar el archivo original después de copiar");
+            report("Error al eliminar el archivo original después de copiar");
             return -1;
         }
     }
@@ -103,7 +106,7 @@ int renombrar(const char *nombreActual, const char *nuevoNombre) {
         //Se cambia el nombre del archivo con rename()
         return 0; 
     } else {
-        perror("Error al renombrar el archivo");
+        report("Error al renombrar el archivo");
         return -1;
     }
 }
@@ -111,7 +114,7 @@ void listar(const char *path) {
     DIR *dir = opendir(path); 
     // Abre el directorio especificado
     if (dir == NULL) {
-        perror("Error al abrir el directorio");
+        report("Error al abrir el directorio");
         return;
     }
 
@@ -131,7 +134,7 @@ void permisos(char *archivos, mode_t permisos_archivo){ //cambia permisos de arc
     while (file != NULL){
         if (chmod(file, permisos_archivo) == -1){
             //con chmod se cambian los permisos de los archivos 
-            printf("Error al cambiar permisos de %s\n", file);
+            report("Error al cambiar permisos del archivo");
         }
         else{
             printf("Permisos de %s cambiados a %o\n", file, permisos_archivo);
@@ -146,14 +149,14 @@ void propietario(char *sfile, char *user_or_group){
     char *flag = strtok(sfile, " ");
     
     if (flag == NULL) {
-        perror("Error: No se proporcionó el flag");
+        report("Error: No se proporcionó el flag");
         return;
     }
 
     if (strcmp(flag, "u") == 0) {
         struct passwd *pwd = getpwnam(user_or_group);
         if (pwd == NULL) {
-            perror("Error obteniendo UID del propietario");
+            report("Error obteniendo UID del propietario");
             return;
         }
         //se obtiene el uid del propietario
@@ -162,7 +165,7 @@ void propietario(char *sfile, char *user_or_group){
         while (file != NULL) {
             if (chown(file, pwd->pw_uid, -1) == -1) {
                 //con esto, se cambia el propietario con la uid conseguida
-                perror("Error al cambiar propietario");
+                report("Error al cambiar propietario");
             } else {
                 printf("Propietario de %s cambiado a %s\n", file, user_or_group);
             }
@@ -172,7 +175,7 @@ void propietario(char *sfile, char *user_or_group){
     } else if (strcmp(flag, "g") == 0) {
         struct group *grp = getgrnam(user_or_group);
         if (grp == NULL) {
-            perror("Error obteniendo GID del grupo");
+            report("Error obteniendo GID del grupo");
             return;
         }
         //se obtiene la gid del grupo
@@ -181,7 +184,7 @@ void propietario(char *sfile, char *user_or_group){
         while (file != NULL) {
             if (chown(file, -1, grp->gr_gid) == -1) {
                 //se cambia el grupo del archivo
-                perror("Error al cambiar grupo");
+                report("Error al cambiar grupo");
             } else {
                 printf("Grupo de %s cambiado a %s\n", file, user_or_group);
             }
@@ -189,7 +192,7 @@ void propietario(char *sfile, char *user_or_group){
         }
 
     } else {
-        perror("Flags: u para propietario (usuario), g para cambiar grupo");
+        report("Flags: u para propietario (usuario), g para cambiar grupo");
     }
     //cabe aclarar que esta funcion puede cambiar propietario y grupo de varios archivos en una linea de comando
 }
@@ -201,7 +204,7 @@ void contraseña(char *usuario, char *password){
 
     if(system(comando) == -1){
         //se ejecuta la llamada al sistema
-        perror("Error al cambiar contraseña");
+        report("Error al cambiar contraseña");
     } 
     else{
         printf("Contraseña cambiada correctamente para el usuario %s\n", usuario);
@@ -216,7 +219,7 @@ void servicio(char* action, char *service_name){
     snprintf(service_path, sizeof(service_path), "/etc/init.d/%s", service_name);
     //se concatena el path de /etc/init.d con el nombre del servicio 
     if (access(service_path, X_OK) == -1){
-        perror("Error: no se puede encontrar o ejecutar el script de servicio");
+        report("Error: no se puede encontrar o ejecutar el script de servicio");
         return;
     }
 
@@ -224,7 +227,7 @@ void servicio(char* action, char *service_name){
     //se ejecuta el servicio y luego se revisa su estado
     if (pid == 0) { 
         execl(service_path, service_path, action, (char *)NULL);
-        perror("Error al iniciar servidor");
+        report("Error al iniciar servidor");
         exit(EXIT_FAILURE);
     }
     else if (pid < 0) { perror("Error al crear proceso");}
@@ -241,7 +244,7 @@ void tftp(char *ftp_server, char *user, char *password, char *remote_file, char 
     uid_t uid = getuid();
     struct passwd *pw = getpwuid(uid);
     if (pw == NULL) {
-        perror("Error obteniendo nombre de usuario");
+        report("Error obteniendo nombre de usuario");
         return;
     }
 
@@ -251,7 +254,7 @@ void tftp(char *ftp_server, char *user, char *password, char *remote_file, char 
     
     FILE *log_file = fopen(log_path, "a");
     if (log_file == NULL) {
-        perror("Error abriendo el archivo de log");
+        report("Error abriendo el archivo de log");
         return;
     }
     
@@ -267,7 +270,7 @@ void tftp(char *ftp_server, char *user, char *password, char *remote_file, char 
    
     int status = system(command);
     if (status == -1) {
-        perror("Error ejecutando el comando tftp");
+        report("Error ejecutando el comando tftp");
         fprintf(log_file, "No exitoso.\n");
     } else {
         printf("Transferencia ftp completada\n");
@@ -279,8 +282,12 @@ void tftp(char *ftp_server, char *user, char *password, char *remote_file, char 
 
 void usuario(char *user, char *info){
     char comando[256];
-    snprintf(comando, sizeof(comando), "sudo useradd -m -s /bin/shell %s -c %s", user, info); 
-    system(comando);
+    snprintf(comando, sizeof(comando), "sudo useradd -m -s /bin/shell %s -c %s", user, info);
+    if (system(comando) == -1){
+        report("Error creando usuario");
+        return;
+    }
+    
     //se crea el usuario con esta shell /bin/shell
     //se agrega info en el campo
 

@@ -29,9 +29,9 @@
 
 
 Pendientes: 
-1. Registrar inicios de sesion y salida de sesion del usuario (detalles en classroom). (IMPLEMENTAR Y PROBAR)
+1. Registrar inicios de sesion y salida de sesion del usuario (detalles en classroom). (IMPLEMENTAR Y PROBAR) - (RESUELTO)
 2. Registrar todos los comandos realizados por cada usuario con timestamps. (RESUELTO)
-3. Registrar errores de retorno en un log. (PENDIENTE)
+3. Registrar errores de retorno en un log. (PENDIENTE) - (RESUELTO)
 4. Documentar codigo.(RESUELTO)
 5. Transferencia FTP o SCP. (No se como hacer esto) - (RESUELTO)
 6. Descargar dependencias necesarias en el lfs. (RESUELTO) - (probar de vuelta)
