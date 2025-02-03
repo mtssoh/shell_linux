@@ -31,6 +31,10 @@ void main (){
     chdir(user_home);
 
     //aqui se hace lo explicado arriba
+	
+	system("export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin");
+	
+	//se carga manualmente el path de cada usuario 
     login_log(1);
     while (1){
         char cwd[512];
