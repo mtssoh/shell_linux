@@ -199,7 +199,7 @@ void propietario(char *sfile, char *user_or_group){
 
 void contraseña(char *usuario, char *password){
     char comando[256];
-    snprintf(comando, sizeof(comando), "echo \"%s:%s\" | sudo chpasswd", usuario, password);
+     snprintf(comando, sizeof(comando), "echo -e \"%s\n%s\" | sudo passwd --stdin %s", password, password, usuario);
     //se hace una llamada al sistema de echo <usuario:password> | sudo chpasswd, esto pasa el string usuario:passwd a sudo chpasswd
 
     if(system(comando) == -1){
