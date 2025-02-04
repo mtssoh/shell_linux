@@ -32,7 +32,7 @@ void main (){
 
     //aqui se hace lo explicado arriba
 	
-	system("export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin");
+	setenv("PATH", "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin", 1);
 	
 	//se carga manualmente el path de cada usuario 
     login_log(1);
