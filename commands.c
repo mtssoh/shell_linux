@@ -215,7 +215,7 @@ void contraseña(char *usuario, char *password){
 void servicio(char* action, char *service_path){
     char *msg = (strcmp(action, "stop") == 0 ? "apagado" : "iniciado");
 
-    //se concatena el path de /etc/init.d con el nombre del servicio 
+   
     if (access(service_path, X_OK) == -1){
         report("Error: no se puede encontrar o ejecutar el script de servicio");
         return;

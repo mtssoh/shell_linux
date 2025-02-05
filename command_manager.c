@@ -185,7 +185,7 @@ void command_manager(char *string) {
         char *action = strtok(argument, " ");
         char *service_name = strtok(NULL, " ");
         if (action == NULL || service_name == NULL){
-            printf("Uso: servicio, <accion (start, stop, restart)> <servicio>\n");
+            printf("Uso: servicio, <accion (start, stop, restart)> <ruta_servicio>\n");
         }
         else{
             servicio(action, service_name);
