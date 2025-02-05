@@ -212,11 +212,9 @@ void contraseña(char *usuario, char *password){
     
 }
 
-void servicio(char* action, char *service_name){
-    char service_path[256];
+void servicio(char* action, char *service_path){
     char *msg = (strcmp(action, "stop") == 0 ? "apagado" : "iniciado");
 
-    snprintf(service_path, sizeof(service_path), "/etc/init.d/%s", service_name);
     //se concatena el path de /etc/init.d con el nombre del servicio 
     if (access(service_path, X_OK) == -1){
         report("Error: no se puede encontrar o ejecutar el script de servicio");
@@ -232,7 +230,7 @@ void servicio(char* action, char *service_name){
     }
     else if (pid < 0) { perror("Error al crear proceso");}
 
-    else { printf("Proceso %s %s correctamente\n", service_name, msg); }
+    else { printf("Proceso %s %s correctamente\n", service_path, msg); }
     //se inicia un sercvicio con servicio start <servicio>
     //se apaga un servicio con servicio stop <servicio>
 }
