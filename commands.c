@@ -197,17 +197,17 @@ void propietario(char *sfile, char *user_or_group){
     //cabe aclarar que esta funcion puede cambiar propietario y grupo de varios archivos en una linea de comando
 }
 
-void contraseña(char *usuario, char *password){
+void contrasena(char *usuario, char *password){
     char comando[256];
      snprintf(comando, sizeof(comando), "echo -e \"%s\n%s\" | sudo passwd --stdin %s", password, password, usuario);
     //se hace una llamada al sistema de echo <usuario:password> | sudo chpasswd, esto pasa el string usuario:passwd a sudo chpasswd
 
     if(system(comando) == -1){
         //se ejecuta la llamada al sistema
-        report("Error al cambiar contraseña");
+        report("Error al cambiar contrasena");
     } 
     else{
-        printf("Contraseña cambiada correctamente para el usuario %s\n", usuario);
+        printf("contrasena cambiada correctamente para el usuario %s\n", usuario);
     }
     
 }

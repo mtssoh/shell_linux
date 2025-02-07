@@ -157,12 +157,12 @@ void command_manager(char *string) {
         //llama a propietario, cambia el propietario de archivo(s)
         
     }
-    else if(strcmp(command, "contraseña") == 0){
+    else if(strcmp(command, "contrasena") == 0){
         if (argument == NULL){
-            printf("Uso: contraseña <usuario> <nueva contraseña>");
+            printf("Uso: contrasena <usuario> <nueva contrasena>");
         }
         else{
-            printf("Estas seguro de cambiar su contraseña? Y/N: ");
+            printf("Estas seguro de cambiar su contrasena? Y/N: ");
             char sec;
 
             scanf("%c", &sec);
@@ -171,15 +171,15 @@ void command_manager(char *string) {
             if (toupper(sec) == 'Y'){
                 char *user = strtok(argument, " ");
                 char *password = strtok(NULL, " ");
-                contraseña(user, password);
+                contrasena(user, password);
             }
             else{
-                printf("Cambio de contraseña cancelado.\n");
+                printf("Cambio de contrasena cancelado.\n");
             }
 
         }
         
-        //llamada a la funcion para cambiar la contraseña, cuenta con un mensaje de advertencia y confirmacion, para evitar errores
+        //llamada a la funcion para cambiar la contrasena, cuenta con un mensaje de advertencia y confirmacion, para evitar errores
     }
     else if (strcmp(command, "servicio") == 0){
         char *action = strtok(argument, " ");

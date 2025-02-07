@@ -12,7 +12,7 @@ int renombrar(const char *nombreActual, const char *nuevoNombre);
 void listar(const char *path);
 void permisos(char *archivos, mode_t permisos);
 void propietario(char *file, char *user_or_group);
-void contraseña(char *usuario, char *password);
+void contrasena(char *usuario, char *password);
 void servicio(char *action, char *service_path);
 void tftp (char *ftp_server, char *user, char *password, char *remote_file, char *local_path);
 void usuario(char *user, char *info);
